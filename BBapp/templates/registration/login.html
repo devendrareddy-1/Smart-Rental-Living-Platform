@@ -1,4 +1,3 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -7,6 +6,36 @@
     <link rel="stylesheet" href="{% static 'BBapp/style.css' %}">
 </head>
 <body>
+
+<!-- ✅ POPUP MESSAGE -->
+<div class="toast-container">
+
+    {% if request.GET.success %}
+    <div class="toast success">Account created successfully! 🎉</div>
+{% endif %}
+
+    {% if request.GET.error == "1" %}
+    <div class="toast error">Passwords do not match ❌</div>
+
+{% elif request.GET.error == "2" %}
+    <div class="toast error">Please fill in all fields ❌</div>
+
+{% elif request.GET.error == "5" %}
+    <div class="toast error">Password must be at least 8 characters ❌</div>
+
+{% elif request.GET.error == "6" %}
+    <div class="toast error">Password must contain uppercase letter ❌</div>
+
+{% elif request.GET.error == "7" %}
+    <div class="toast error">Password must contain lowercase letter ❌</div>
+
+{% elif request.GET.error == "8" %}
+    <div class="toast error">Password must contain number ❌</div>
+{% endif %}
+    
+   
+
+</div>
 
 <div class="login-wrapper">
 <div class="login-container">
@@ -18,10 +47,10 @@
         <span id="loginTab" onclick="showLogin()">LOGIN</span>
     </div>
 
-    <form method="POST">
+    <form method="POST" id="mainForm" action="/signup/">
         {% csrf_token %}
 
-        <!-- SIGNUP FORM -->
+        <!-- SIGNUP -->
         <div id="signupForm">
 
             <div class="box-field">
@@ -36,7 +65,7 @@
 
             <div class="box-field">
                 <label>Email ID</label>
-                <input type="email" name="email">
+                <input type="email" name="email" >
             </div>
 
             <div class="box-field">
@@ -46,18 +75,18 @@
 
             <div class="box-field">
                 <label>Confirm Password</label>
-                <input type="password" name="confirm_password">
+                <input type="password" name="confirm_password" >
             </div>
 
             <button type="submit" class="create-btn">Create Account</button>
         </div>
 
-        <!-- LOGIN FORM -->
+        <!-- LOGIN -->
         <div id="loginForm" style="display:none;">
 
             <div class="loginbox-field">
-                <label>Username or Email address</label>
-                <input type="email" name="login_email">
+                <label>Email</label>
+                <input type="email" name="login_email" >
             </div>
 
             <div class="loginbox-field password-field">
@@ -76,19 +105,49 @@
 
 <script>
 function showSignup() {
-    signupForm.style.display = "block";
-    loginForm.style.display = "none";
-    signupTab.classList.add("active");
-    loginTab.classList.remove("active");
+    document.getElementById("signupForm").style.display = "block";
+    document.getElementById("loginForm").style.display = "none";
+
+    document.getElementById("signupTab").classList.add("active");
+    document.getElementById("loginTab").classList.remove("active");
+
+    document.getElementById("mainForm").action = "/signup/";
 }
 
 function showLogin() {
-    loginForm.style.display = "block";
-    signupForm.style.display = "none";
-    loginTab.classList.add("active");
-    signupTab.classList.remove("active");
-}
-</script>
+    document.getElementById("loginForm").style.display = "block";
+    document.getElementById("signupForm").style.display = "none";
 
+    document.getElementById("loginTab").classList.add("active");
+    document.getElementById("signupTab").classList.remove("active");
+
+    document.getElementById("mainForm").action = "/login/";
+}
+
+window.onload = function () {
+
+    const params = new URLSearchParams(window.location.search);
+    const isSuccess = params.get("success");
+
+    if (isSuccess) {
+
+        // ✅ Step 1: Show signup first (popup visible)
+        showSignup();
+
+        // ✅ Step 2: Wait and switch to login
+        setTimeout(() => {
+            showLogin();
+        }, 2000);
+
+        // ✅ Step 3: Remove URL params
+        setTimeout(() => {
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }, 3000);
+
+    } else {
+        showSignup();
+    }
+};
+</script>
 </body>
 </html>

@@ -19,9 +19,9 @@
             <div class="property-location">{{ property.location }}</div>
             <div class="property-price">₹{{ property.price }} / month</div>
 
-            <a href="{% url 'contact_owner' property.id %}" class="book-btn">
-                Book Now
-            </a>
+            <a href="{% url 'book_property' property.id %}" class="book-btn">
+    Book Now
+</a>
         </div>
 
     </div>

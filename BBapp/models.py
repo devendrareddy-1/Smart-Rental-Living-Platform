@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Property(models.Model):
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    description=models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     location = models.CharField(max_length=200)
     image = models.ImageField(upload_to='properties/')
@@ -23,7 +23,7 @@ class Contact(models.Model):
     message=models.TextField()
 
 class Inquiry(models.Model):
-    property_type=models.ForeignKey(Property,on_delete=models.CASCADE)
+    property=models.ForeignKey(Property,on_delete=models.CASCADE)
     location=models.CharField(max_length=200)
     budget=models.DecimalField(max_digits=10,decimal_places=2)
     phone=models.CharField(max_length=10)

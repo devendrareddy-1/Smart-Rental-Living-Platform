@@ -20,7 +20,7 @@
         </script>
 
     {% else %}
-        <form method="post" action="{% url 'book_property' %}" class="booking-form">
+        <form method="post" action="{% url 'book_property_simple' %}" class="booking-form">
             {% csrf_token %}
 
             <div class="field">

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <title>{% block title %}Sweet Home{% endblock %}</title>
 
@@ -35,10 +36,10 @@
 
     <!-- RIGHT SIDE -->
     <ul class="nav-links-right-top">
-        <li><a class="book-btn" href="{% url 'book_property' %}">Book Now</a></li>
+        <li><a class="book-btn" href="{% url 'book_property_simple' %}">Book Now</a></li>
         <li><a class="book-btn" href="{% url 'login' %}">CheckIn</a></li>
-        <li><a href="{% url 'location' %}"> 📍Location</a></li>
-        <li><a class="contact-container" href="{% url 'contact' %}"> 👤Contact Us</a></li>
+        <li><a class="book-btn" href="{% url 'location' %}">📍 Location</a></li>
+<li><a class="book-btn" href="{% url 'contact' %}">👤 Contact Us</a></li>
     </ul>
 
 </nav>
